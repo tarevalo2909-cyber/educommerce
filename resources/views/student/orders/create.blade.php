@@ -9,15 +9,15 @@
             <div class="card-body">
                 <h4>{{ $course->title }}</h4>
                 <p class="text-muted">Profesor: {{ $course->teacher->name }}</p>
-                <h2 class="text-primary">S/ {{ number_format($course->price, 2) }}</h2>
+                <h2 class="text-primary">$ {{ number_format($course->price, 0, ',', '.') }}</h2>
             </div>
         </div>
         <div class="alert alert-info mt-3">
             <h6 class="mb-2"><i class="bi bi-bank"></i> Datos para transferir</h6>
             <small>
-                <strong>BCP:</strong> 191-12345678-0-12<br>
-                <strong>Interbank:</strong> 200-3001234567<br>
-                <strong>Yape/Plin:</strong> 999 888 777
+                <strong>Bancolombia (Ahorros):</strong> 1234-5678-9012<br>
+                <strong>Davivienda (Corriente):</strong> 0098-7654-3210<br>
+                <strong>Nequi / Daviplata:</strong> 300 555 4444
             </small>
         </div>
     </div>
@@ -30,7 +30,7 @@
                     <label class="form-label">Banco</label>
                     <select name="bank" class="form-select" required>
                         <option value="">Selecciona...</option>
-                        @foreach(['BCP','BBVA','Interbank','Scotiabank','Yape','Plin'] as $b)
+                        @foreach(['Bancolombia','Davivienda','BBVA','Banco de Bogotá','Banco de Occidente','Nequi','Daviplata'] as $b)
                             <option value="{{ $b }}">{{ $b }}</option>
                         @endforeach
                     </select>

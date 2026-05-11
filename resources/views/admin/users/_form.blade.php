@@ -20,7 +20,7 @@
         <label class="form-label">Rol</label>
         <select name="role" class="form-select" required>
             @foreach($roles as $role)
-                <option value="{{ $role }}" @selected(old('role', isset($user) ? $user->roles->pluck('name')->first() : '')==$role)>{{ ucfirst($role) }}</option>
+                <option value="{{ $role }}" {{ old('role', isset($user) ? $user->roles->pluck('name')->first() : '')==$role ? 'selected' : '' }}>{{ ucfirst($role) }}</option>
             @endforeach
         </select>
     </div>
@@ -34,7 +34,7 @@
     </div>
     <div class="col-12">
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" name="is_active" value="1" id="is_active" @checked(old('is_active', $user->is_active ?? true))>
+            <input class="form-check-input" type="checkbox" name="is_active" value="1" id="is_active" {{ old('is_active', $user->is_active ?? true) ? 'checked' : '' }}>
             <label class="form-check-label" for="is_active">Usuario activo</label>
         </div>
     </div>

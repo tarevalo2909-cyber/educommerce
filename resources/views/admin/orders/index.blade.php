@@ -8,9 +8,9 @@
     <div class="col-md-3">
         <select class="form-select" name="status">
             <option value="">Todos los estados</option>
-            <option value="pending" @selected(request('status')=='pending')>Pendientes</option>
-            <option value="approved" @selected(request('status')=='approved')>Aprobados</option>
-            <option value="rejected" @selected(request('status')=='rejected')>Rechazados</option>
+            <option value="pending" {{ request('status')=='pending' ? 'selected' : '' }}>Pendientes</option>
+            <option value="approved" {{ request('status')=='approved' ? 'selected' : '' }}>Aprobados</option>
+            <option value="rejected" {{ request('status')=='rejected' ? 'selected' : '' }}>Rechazados</option>
         </select>
     </div>
     <div class="col-md-2"><button class="btn btn-outline-primary w-100">Filtrar</button></div>
@@ -27,7 +27,7 @@
                     <td>{{ $order->id }}</td>
                     <td>{{ $order->student->name }}<br><small class="text-muted">{{ $order->student->email }}</small></td>
                     <td>{{ $order->course->title }}<br><small class="text-muted">{{ $order->course->teacher->name }}</small></td>
-                    <td>S/ {{ number_format($order->amount, 2) }}</td>
+                    <td>$ {{ number_format($order->amount, 0, ',', '.') }}</td>
                     <td>
                         @if($order->isPending())<span class="badge badge-status-pending">Pendiente</span>
                         @elseif($order->isApproved())<span class="badge badge-status-approved">Aprobado</span>

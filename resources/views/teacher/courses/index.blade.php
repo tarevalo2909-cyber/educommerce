@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ $course->title }}</h5>
                     <p class="text-muted small mb-1">{{ $course->category->name ?? 'Sin categoría' }} · {{ ucfirst($course->level) }}</p>
-                    <strong class="text-primary">S/ {{ number_format($course->price, 2) }}</strong>
+                    <strong class="text-primary">$ {{ number_format($course->price, 0, ',', '.') }}</strong>
                     <div class="mt-2 small">
                         <span class="badge bg-info text-dark">{{ $course->enrollments_count }} matriculados</span>
                         <span class="badge bg-secondary">{{ $course->orders_count }} órdenes</span>

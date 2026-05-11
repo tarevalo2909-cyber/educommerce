@@ -32,7 +32,7 @@
     <div class="col-md-4">
         <div class="card sticky-top shadow-sm" style="top:20px;">
             <div class="card-body text-center">
-                <h2 class="text-primary">S/ {{ number_format($course->price, 2) }}</h2>
+                <h2 class="text-primary">$ {{ number_format($course->price, 0, ',', '.') }}</h2>
                 @auth
                     @if(auth()->user()->isStudent())
                         @php $enrolled = auth()->user()->enrollments()->where('course_id', $course->id)->exists(); @endphp

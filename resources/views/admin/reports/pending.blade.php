@@ -48,7 +48,7 @@
                             <td>{{ $order->id }}</td>
                             <td>{{ $order->student->name }}</td>
                             <td>{{ $order->course->title }}</td>
-                            <td>S/ {{ number_format($order->amount, 2) }}</td>
+                            <td>$ {{ number_format($order->amount, 0, ',', '.') }}</td>
                             <td>
                                 @php $days = $order->created_at->diffInDays(now()); @endphp
                                 <span class="badge {{ $days >= 3 ? 'bg-danger' : ($days >= 1 ? 'bg-warning text-dark' : 'bg-secondary') }}">{{ $days }} día(s)</span>

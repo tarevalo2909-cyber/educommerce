@@ -13,16 +13,16 @@
         <select class="form-select" name="category">
             <option value="">Todas las categorías</option>
             @foreach($categories as $cat)
-                <option value="{{ $cat->id }}" @selected(request('category') == $cat->id)>{{ $cat->name }}</option>
+                <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
             @endforeach
         </select>
     </div>
     <div class="col-md-2">
         <select class="form-select" name="level">
             <option value="">Cualquier nivel</option>
-            <option value="basico" @selected(request('level')=='basico')>Básico</option>
-            <option value="intermedio" @selected(request('level')=='intermedio')>Intermedio</option>
-            <option value="avanzado" @selected(request('level')=='avanzado')>Avanzado</option>
+            <option value="basico" {{ request('level')=='basico' ? 'selected' : '' }}>Básico</option>
+            <option value="intermedio" {{ request('level')=='intermedio' ? 'selected' : '' }}>Intermedio</option>
+            <option value="avanzado" {{ request('level')=='avanzado' ? 'selected' : '' }}>Avanzado</option>
         </select>
     </div>
     <div class="col-md-2"><button class="btn btn-primary w-100"><i class="bi bi-search"></i> Buscar</button></div>
@@ -41,7 +41,7 @@
                     <p class="card-text small">{{ Str::limit($course->description, 100) }}</p>
                 </div>
                 <div class="card-footer bg-white d-flex justify-content-between align-items-center">
-                    <strong class="text-primary">S/ {{ number_format($course->price, 2) }}</strong>
+                    <strong class="text-primary">$ {{ number_format($course->price, 0, ',', '.') }}</strong>
                     <a href="{{ route('catalog.show', $course->slug) }}" class="btn btn-sm btn-outline-primary">Ver detalle</a>
                 </div>
             </div>

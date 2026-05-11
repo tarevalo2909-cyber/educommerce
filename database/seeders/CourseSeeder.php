@@ -25,13 +25,13 @@ class CourseSeeder extends Seeder
         $catMarketing = Category::where('slug', 'marketing')->first();
 
         $courses = [
-            ['title' => 'PHP desde cero', 'teacher' => $teacher1, 'category' => $catProg, 'price' => 49.90, 'level' => 'basico'],
-            ['title' => 'Laravel 8 avanzado', 'teacher' => $teacher1, 'category' => $catProg, 'price' => 89.90, 'level' => 'avanzado'],
-            ['title' => 'JavaScript moderno', 'teacher' => $teacher1, 'category' => $catProg, 'price' => 59.90, 'level' => 'intermedio'],
-            ['title' => 'Diseño UI/UX con Figma', 'teacher' => $teacher2, 'category' => $catDesign, 'price' => 69.90, 'level' => 'basico'],
-            ['title' => 'Photoshop profesional', 'teacher' => $teacher2, 'category' => $catDesign, 'price' => 79.90, 'level' => 'intermedio'],
-            ['title' => 'Marketing digital 360', 'teacher' => $teacher2, 'category' => $catMarketing, 'price' => 99.90, 'level' => 'intermedio'],
-            ['title' => 'SEO para principiantes', 'teacher' => $teacher2, 'category' => $catMarketing, 'price' => 39.90, 'level' => 'basico'],
+            ['title' => 'PHP desde cero', 'teacher' => $teacher1, 'category' => $catProg, 'price' => 150000, 'level' => 'basico'],
+            ['title' => 'Laravel 8 avanzado', 'teacher' => $teacher1, 'category' => $catProg, 'price' => 280000, 'level' => 'avanzado'],
+            ['title' => 'JavaScript moderno', 'teacher' => $teacher1, 'category' => $catProg, 'price' => 180000, 'level' => 'intermedio'],
+            ['title' => 'Diseño UI/UX con Figma', 'teacher' => $teacher2, 'category' => $catDesign, 'price' => 220000, 'level' => 'basico'],
+            ['title' => 'Photoshop profesional', 'teacher' => $teacher2, 'category' => $catDesign, 'price' => 250000, 'level' => 'intermedio'],
+            ['title' => 'Marketing digital 360', 'teacher' => $teacher2, 'category' => $catMarketing, 'price' => 320000, 'level' => 'intermedio'],
+            ['title' => 'SEO para principiantes', 'teacher' => $teacher2, 'category' => $catMarketing, 'price' => 120000, 'level' => 'basico'],
         ];
 
         $created = [];
@@ -71,9 +71,10 @@ class CourseSeeder extends Seeder
             'reviewed_at' => $reviewer ? now() : null,
         ]);
 
+        $banks = ['Bancolombia', 'Davivienda', 'BBVA', 'Banco de Bogotá', 'Nequi', 'Daviplata'];
         $order->paymentProof()->create([
             'file_path' => 'comprobantes/demo.jpg',
-            'bank' => 'BCP',
+            'bank' => $banks[array_rand($banks)],
             'operation_number' => (string) rand(100000, 999999),
             'payment_date' => now()->subDays(rand(1, 30)),
         ]);

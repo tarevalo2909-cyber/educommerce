@@ -23,7 +23,7 @@
         <div class="card shadow-sm stat-card">
             <div class="card-body">
                 <small class="text-muted">Ingresos en el rango</small>
-                <h3 class="text-primary mb-0">S/ {{ number_format($totalRevenue, 2) }}</h3>
+                <h3 class="text-primary mb-0">$ {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
             </div>
         </div>
     </div>
@@ -63,7 +63,7 @@
                     <td>{{ $row->course->title ?? 'Curso eliminado' }}</td>
                     <td>{{ $row->course->teacher->name ?? '—' }}</td>
                     <td>{{ $row->sales_count }}</td>
-                    <td>S/ {{ number_format($row->revenue, 2) }}</td>
+                    <td>$ {{ number_format($row->revenue, 0, ',', '.') }}</td>
                 </tr>
             @empty
                 <tr><td colspan="5" class="text-center text-muted">Sin datos en el rango seleccionado.</td></tr>
@@ -93,14 +93,14 @@ new Chart(document.getElementById('chartMonthly'), {
     data: {
         labels: monthlyLabels,
         datasets: [
-            {label: 'Ingresos (S/)', data: monthlyRevenue, borderColor:'#198754', backgroundColor:'rgba(25,135,84,.2)', tension:.3, fill:true, yAxisID:'y'},
+            {label: 'Ingresos (COP $)', data: monthlyRevenue, borderColor:'#198754', backgroundColor:'rgba(25,135,84,.2)', tension:.3, fill:true, yAxisID:'y'},
             {label: 'Ventas', data: monthlySales, borderColor:'#dc3545', tension:.3, yAxisID:'y1'}
         ]
     },
     options: {
         responsive: true,
         scales: {
-            y: {position:'left', title:{display:true, text:'S/'}},
+            y: {position:'left', title:{display:true, text:'COP $'}},
             y1: {position:'right', grid:{drawOnChartArea:false}, title:{display:true, text:'Ventas'}}
         }
     }

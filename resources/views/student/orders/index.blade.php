@@ -10,7 +10,7 @@
                 <tr>
                     <td>{{ $order->id }}</td>
                     <td>{{ $order->course->title }}</td>
-                    <td>S/ {{ number_format($order->amount, 2) }}</td>
+                    <td>$ {{ number_format($order->amount, 0, ',', '.') }}</td>
                     <td>
                         @if($order->isPending())<span class="badge badge-status-pending">Pendiente</span>
                         @elseif($order->isApproved())<span class="badge badge-status-approved">Aprobado</span>

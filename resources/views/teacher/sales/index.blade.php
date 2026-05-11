@@ -7,7 +7,7 @@
         <div class="card shadow-sm stat-card">
             <div class="card-body">
                 <small class="text-muted">Ingresos totales</small>
-                <h3 class="text-primary mb-0">S/ {{ number_format($totalRevenue, 2) }}</h3>
+                <h3 class="text-primary mb-0">$ {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
                     <td>{{ $order->id }}</td>
                     <td>{{ $order->student->name }}</td>
                     <td>{{ $order->course->title }}</td>
-                    <td>S/ {{ number_format($order->amount, 2) }}</td>
+                    <td>$ {{ number_format($order->amount, 0, ',', '.') }}</td>
                     <td>{{ optional($order->reviewed_at)->format('d/m/Y H:i') ?? $order->created_at->format('d/m/Y H:i') }}</td>
                 </tr>
             @empty

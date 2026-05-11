@@ -11,7 +11,7 @@
                     <dt class="col-sm-4">Estudiante</dt><dd class="col-sm-8">{{ $order->student->name }} <small class="text-muted">({{ $order->student->email }})</small></dd>
                     <dt class="col-sm-4">Curso</dt><dd class="col-sm-8">{{ $order->course->title }}</dd>
                     <dt class="col-sm-4">Profesor</dt><dd class="col-sm-8">{{ $order->course->teacher->name }}</dd>
-                    <dt class="col-sm-4">Monto</dt><dd class="col-sm-8">S/ {{ number_format($order->amount, 2) }}</dd>
+                    <dt class="col-sm-4">Monto</dt><dd class="col-sm-8">$ {{ number_format($order->amount, 0, ',', '.') }}</dd>
                     <dt class="col-sm-4">Estado</dt><dd class="col-sm-8">
                         @if($order->isPending())<span class="badge badge-status-pending">Pendiente</span>
                         @elseif($order->isApproved())<span class="badge badge-status-approved">Aprobado</span>

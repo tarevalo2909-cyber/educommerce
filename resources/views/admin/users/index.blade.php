@@ -13,7 +13,7 @@
         <select class="form-select" name="role">
             <option value="">Todos los roles</option>
             @foreach($roles as $role)
-                <option value="{{ $role }}" @selected(request('role')==$role)>{{ ucfirst($role) }}</option>
+                <option value="{{ $role }}" {{ request('role')==$role ? 'selected' : '' }}>{{ ucfirst($role) }}</option>
             @endforeach
         </select>
     </div>
