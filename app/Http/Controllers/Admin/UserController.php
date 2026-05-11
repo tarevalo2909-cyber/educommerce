@@ -3,83 +3,98 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = User::with('roles');
+        if ($search = $request->input('q')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+        if ($role = $request->input('role')) {
+            $query->whereHas('roles', fn($q) => $q->where('name', $role));
+        }
+        $users = $query->latest()->paginate(15)->withQueryString();
+        $roles = Role::pluck('name');
+        return view('admin.users.index', compact('users', 'roles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $roles = Role::pluck('name');
+        return view('admin.users.create', compact('roles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'role' => 'required|exists:roles,name',
+            'dni' => 'nullable|string|max:20',
+            'phone' => 'nullable|string|max:20',
+            'is_active' => 'nullable|boolean',
+        ]);
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'dni' => $data['dni'] ?? null,
+            'phone' => $data['phone'] ?? null,
+            'is_active' => $request->boolean('is_active', true),
+        ]);
+        $user->assignRole($data['role']);
+        return redirect()->route('admin.users.index')->with('success', 'Usuario creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function edit(User $user)
     {
-        //
+        $roles = Role::pluck('name');
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(Request $request, User $user)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'role' => 'required|exists:roles,name',
+            'dni' => 'nullable|string|max:20',
+            'phone' => 'nullable|string|max:20',
+        ]);
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->dni = $data['dni'] ?? null;
+        $user->phone = $data['phone'] ?? null;
+        $user->is_active = $request->boolean('is_active', true);
+        if (!empty($data['password'])) {
+            $user->password = Hash::make($data['password']);
+        }
+        $user->save();
+        $user->syncRoles([$data['role']]);
+        return redirect()->route('admin.users.index')->with('success', 'Usuario actualizado.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function show(User $user)
     {
-        //
+        return redirect()->route('admin.users.edit', $user);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        if ($user->id === auth()->id()) {
+            return back()->with('error', 'No puedes eliminar tu propio usuario.');
+        }
+        $user->delete();
+        return back()->with('success', 'Usuario eliminado.');
     }
 }
