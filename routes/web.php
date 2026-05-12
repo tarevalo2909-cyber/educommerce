@@ -8,6 +8,7 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Student\EnrollmentController as StudentEnrollmentController;
 use App\Http\Controllers\Student\OrderController as StudentOrderController;
+use App\Http\Controllers\Teacher\ContentController as TeacherContentController;
 use App\Http\Controllers\Teacher\CourseController as TeacherCourseController;
 use App\Http\Controllers\Teacher\SalesController as TeacherSalesController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 Route::middleware(['auth', 'role:profesor'])->prefix('profesor')->name('teacher.')->group(function () {
     Route::resource('cursos', TeacherCourseController::class)->parameters(['cursos' => 'course'])->names('courses');
+
+    Route::prefix('cursos/{course}/contenido')->name('courses.content.')->group(function () {
+        Route::get('/', [TeacherContentController::class, 'index'])->name('index');
+        Route::post('modulos', [TeacherContentController::class, 'storeModule'])->name('modules.store');
+        Route::put('modulos/{module}', [TeacherContentController::class, 'updateModule'])->name('modules.update');
+        Route::delete('modulos/{module}', [TeacherContentController::class, 'destroyModule'])->name('modules.destroy');
+        Route::post('modulos/{module}/lecciones', [TeacherContentController::class, 'storeLesson'])->name('lessons.store');
+        Route::put('modulos/{module}/lecciones/{lesson}', [TeacherContentController::class, 'updateLesson'])->name('lessons.update');
+        Route::delete('modulos/{module}/lecciones/{lesson}', [TeacherContentController::class, 'destroyLesson'])->name('lessons.destroy');
+    });
+
     Route::get('ventas', [TeacherSalesController::class, 'index'])->name('sales.index');
 });
 

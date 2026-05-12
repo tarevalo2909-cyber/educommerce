@@ -22,6 +22,7 @@
                     </div>
                 </div>
                 <div class="card-footer bg-white">
+                    <a href="{{ route('teacher.courses.content.index', $course) }}" class="btn btn-sm btn-primary"><i class="bi bi-journal-richtext"></i> Contenido</a>
                     <a href="{{ route('teacher.courses.edit', $course) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i> Editar</a>
                     <form action="{{ route('teacher.courses.destroy', $course) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Eliminar curso?')">
                         @csrf @method('DELETE')
