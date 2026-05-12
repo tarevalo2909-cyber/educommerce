@@ -2,7 +2,35 @@
 @section('title', 'Catálogo de cursos')
 
 @section('content')
-<div class="bg-primary text-white p-5 rounded mb-4">
+@push('styles')
+<style>
+    .catalog-hero {
+        position:relative;
+        background: linear-gradient(135deg, #c8901c 0%, #a5740f 55%, #6e4d0a 100%);
+        color:#fff;
+        padding: 3rem 2.5rem;
+        border-radius: 1.2rem;
+        margin-bottom: 1.75rem;
+        overflow:hidden;
+        box-shadow: 0 12px 36px rgba(165,116,15,.25);
+    }
+    .catalog-hero::before {
+        content:""; position:absolute; top:-80px; right:-60px;
+        width:260px; height:260px; border-radius:50%;
+        background: radial-gradient(circle, rgba(255,255,255,.18) 0%, rgba(255,255,255,0) 70%);
+    }
+    .catalog-hero::after {
+        content:""; position:absolute; bottom:-100px; left:-40px;
+        width:240px; height:240px; border-radius:50%;
+        background: radial-gradient(circle, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 70%);
+    }
+    .catalog-hero h1 { font-weight:800; letter-spacing:.2px; position:relative; }
+    .catalog-hero p { color: rgba(255,255,255,.9); position:relative; margin-bottom:0; }
+    .catalog-hero i { color:#fff3d6; }
+</style>
+@endpush
+
+<div class="catalog-hero">
     <h1 class="display-5 fw-bold"><i class="bi bi-mortarboard"></i> Aprende lo que quieras, cuando quieras</h1>
     <p class="lead">Cursos creados por profesores expertos. Compra, aprende y crece.</p>
 </div>
